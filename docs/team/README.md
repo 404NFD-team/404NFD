@@ -5,7 +5,6 @@
 
 <div class="team-grid">
 
-  <!-- 成员卡片 1 -->
   <a href="https://www.gongyizhen.site" target="_blank" rel="noopener" class="team-card">
     <div class="avatar-wrapper">
       <img class="avatar" src="https://www.gongyizhen.site/img/avatar.jpg">
@@ -16,7 +15,6 @@
     </div>
   </a>
 
-  <!-- 成员卡片 2 -->
   <a href="https://autyui.github.io" target="_blank" rel="noopener" class="team-card">
     <div class="avatar-wrapper">
       <img class="avatar" src="https://autyui.github.io/img/theYellow.jpg">
@@ -27,7 +25,6 @@
     </div>
   </a>
 
-  <!-- 成员卡片 3 -->
   <div target="_blank" rel="noopener" class="team-card">
     <div class="avatar-wrapper">
       <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=1745536485&s=640">
@@ -35,6 +32,16 @@
     <div class="card-content">
       <div class="member-name">Rhomin</div>
       <div class="member-bio">奶粉店杂食理货员,web+misc手</div>
+    </div>
+  </div>
+
+  <div target="_blank" rel="noopener" class="team-card">
+    <div class="avatar-wrapper">
+      <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=1353122676&s=640">
+    </div>
+    <div class="card-content">
+      <div class="member-name">Ria_VT</div>
+      <div class="member-bio">奶粉店偷吃手，misc脚</div>
     </div>
   </div>
 </div>
