@@ -2,6 +2,6 @@
 
 * [首页](/)
 * [成员](/team/)
-* [writeups](/writeups/)
+* [Writeups](/writeups/)
 * [加入我们](/join/)
 * [关于](/about/)

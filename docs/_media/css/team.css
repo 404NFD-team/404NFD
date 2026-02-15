@@ -1,0 +1,96 @@
+/* 成员卡片网格容器 */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* 卡片本身（作为可点击链接） */
+.team-card {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg, #ffffff);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+  overflow: hidden;
+  position: relative; /* 为可能的绝对定位做准备，目前不需要 */
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+}
+
+/* 头像容器：固定宽高、圆形、隐藏溢出 */
+.avatar-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: 1rem;
+  border: 3px solid var(--theme-color, #42b983);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+  will-change: transform, opacity; /* 提升动画性能 */
+}
+
+/* 头像图片（无需单独动画，随父容器移动） */
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 鼠标悬停卡片时：头像框整体逆时针旋转并向左滚出 */
+.team-card:hover .avatar-wrapper {
+  transform: translateX(-100%) rotate(-100deg); /* 向左移动并逆时针旋转 */
+  opacity: 0;
+}
+
+/* 文字内容区域 */
+.card-content {
+  flex: 1;
+  min-width: 0; /* 防止内容过长导致溢出 */
+}
+
+.member-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: var(--heading-color, #2c3e50);
+}
+
+.member-bio {
+  font-size: 0.9rem;
+  color: var(--text-color-light, #6c757d);
+  margin: 0.25rem 0;
+  line-height: 1.4;
+}
+
+.member-blog {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--theme-color, #42b983);
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+}
+
+/* 暗色主题适配 */
+[data-theme="dark"] .team-card {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+[data-theme="dark"] .member-name {
+  color: #e0e0e0;
+}
+[data-theme="dark"] .member-bio {
+  color: #b0b0b0;
+}
