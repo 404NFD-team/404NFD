@@ -44,6 +44,18 @@
       <div class="member-bio">奶粉店偷吃手，misc脚</div>
     </div>
   </div>
+
+  <div target="_blank" rel="noopener" class="team-card">
+    <div class="avatar-wrapper">
+      <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=3569106840&s=640">
+    </div>
+    <div class="card-content">
+      <div class="member-name">Boxing</div>
+      <div class="member-bio">奶粉店魂殿殿长~~re+misc</div>
+    </div>
+  </div>
+
+  
 </div>
 
 > 欢迎更多同学加入我们
