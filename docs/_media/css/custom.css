@@ -332,8 +332,24 @@ input[type="button"]:active {
 
 /* 封面页 */
 section.cover {
-  background: var(--base-color);
+  background: var(--base-color) !important;
   color: var(--text-color);
+}
+
+/* 封面页logo样式 */
+section.cover img {
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto 2rem;
+  border-radius: var(--rounded-corner);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-medium) var(--ease-out-cubic);
+}
+
+section.cover img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
 }
 
 section.cover h1 {
