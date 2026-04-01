@@ -133,14 +133,6 @@ function initMouseEffects() {
       height: 30px;
       background-color: rgba(100, 181, 246, 0.2);
     }
-    
-    body {
-      cursor: none;
-    }
-    
-    a, button, .team-card, input {
-      cursor: none !important;
-    }
   `;
   document.head.appendChild(cursorStyle);
   
@@ -159,8 +151,8 @@ function initMouseEffects() {
     const dx = mouseX - cursorX;
     const dy = mouseY - cursorY;
     
-    cursorX += dx * 0.15;
-    cursorY += dy * 0.15;
+    cursorX += dx * 0.3;
+    cursorY += dy * 0.3;
     
     cursor.style.left = cursorX + 'px';
     cursor.style.top = cursorY + 'px';
