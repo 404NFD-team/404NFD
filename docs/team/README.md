@@ -60,8 +60,8 @@
       <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=2540830127&s=640">
     </div>
     <div class="card-content">
-      <div class="member-name">没给我id</div>
-      <div class="member-bio">没给我介绍</div>
+      <div class="member-name">Hykon</div>
+      <div class="member-bio">有一种只需要努力而不需要天赋的方法……</div>
     </div>
   </div>
 
@@ -80,8 +80,8 @@
       <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=3673140049&s=640">
     </div>
     <div class="card-content">
-      <div class="member-name">没给我id</div>
-      <div class="member-bio">没给我介绍</div>
+      <div class="member-name">web小手子</div>
+      <div class="member-bio">当你在CTF上用codex、claude的无脑开环境传附件的时候，有没有想过几年前你的梦想是成为手撕代码挖掘0day漏洞的安全研究员。</div>
     </div>
   </div>
 
@@ -90,8 +90,8 @@
       <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=3024264633&s=640">
     </div>
     <div class="card-content">
-      <div class="member-name">没给我id</div>
-      <div class="member-bio">没给我介绍</div>
+      <div class="member-name">chen11qaq</div>
+      <div class="member-bio">人见人爱，花见花开，车见车爆胎</div>
     </div>
   </div>
 
