@@ -70,8 +70,8 @@
       <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=3033488776&s=640">
     </div>
     <div class="card-content">
-      <div class="member-name">没给我id</div>
-      <div class="member-bio">没给我介绍</div>
+      <div class="member-name">chen11qaq</div>
+      <div class="member-bio">人见人爱，花见花开，车见车爆胎</div>
     </div>
   </div>
   
@@ -90,8 +90,8 @@
       <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=3024264633&s=640">
     </div>
     <div class="card-content">
-      <div class="member-name">chen11qaq</div>
-      <div class="member-bio">人见人爱，花见花开，车见车爆胎</div>
+      <div class="member-name">没给我id</div>
+      <div class="member-bio">没给我介绍</div>
     </div>
   </div>
 
