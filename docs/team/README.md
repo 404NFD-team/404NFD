@@ -90,8 +90,8 @@
       <img class="avatar" src="https://q1.qlogo.cn/g?b=qq&nk=3024264633&s=640">
     </div>
     <div class="card-content">
-      <div class="member-name">没给我id</div>
-      <div class="member-bio">没给我介绍</div>
+      <div class="member-name">Flashzin0</div>
+      <div class="member-bio">奶粉店喵喵拳击手 叫我闪电就好ovo*</div>
     </div>
   </div>
 
