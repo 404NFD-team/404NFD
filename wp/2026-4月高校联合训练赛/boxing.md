@@ -1,7 +1,5 @@
 # Boxing Writeup
 
-> 2026 年 4 月高校联合训练赛，作者：Boxing。图片从 `BoxingのWrite Up.pdf` 提取，统一归档在 `wp/data/boxing-writeup/`。
-
 ## Forensics
 
 ### 钓鱼邮件
