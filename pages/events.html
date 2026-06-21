@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="404NFD CTF Team events calendar. 404NFD 战队活动日历。" />
+    <meta name="theme-color" content="#151018" />
+    <title>404NFD | Events</title>
+    <link rel="icon" href="../assets/favicon.ico" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <script src="../scripts/events.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="404NFD home">
+        <img src="../assets/favicon.ico" alt="" />
+        <span>404NFD</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="about.html">About</a>
+        <a href="tracks.html">Tracks</a>
+        <a href="members.html">Crew</a>
+        <a href="events.html" aria-current="page">Events</a>
+        <a href="wp.html">WP</a>
+        <a href="join.html">Join</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="chip">EVENT CALENDAR</p>
+        <h1>活动日历</h1>
+        <p class="lead">
+          展示 404NFD 即将发生的训练、比赛、分享和招新活动。新增活动时只需要维护
+          <code>events.js</code> 顶部的数据。
+        </p>
+      </section>
+
+      <section class="event-dashboard">
+        <article class="next-event" id="nextEvent" aria-live="polite"></article>
+        <aside class="calendar-card">
+          <div class="calendar-head">
+            <span id="calendarMonth">----</span>
+            <strong>Upcoming</strong>
+          </div>
+          <div class="calendar-grid" id="calendarGrid" aria-label="本月活动日历"></div>
+        </aside>
+      </section>
+
+      <section class="events-section">
+        <div class="section-title">
+          <p class="chip">UPCOMING LIST</p>
+          <h2>即将发生</h2>
+        </div>
+        <div class="event-list" id="eventList" aria-live="polite"></div>
+      </section>
+    </main>
+  </body>
+</html>

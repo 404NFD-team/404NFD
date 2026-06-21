@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="404NFD CTF Team writeup reader. 404NFD WP 阅读页。" />
+    <meta name="theme-color" content="#151018" />
+    <title>404NFD | WP Reader</title>
+    <link rel="icon" href="../assets/favicon.ico" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <script src="../scripts/wp.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="404NFD home">
+        <img src="../assets/favicon.ico" alt="" />
+        <span>404NFD</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="about.html">About</a>
+        <a href="tracks.html">Tracks</a>
+        <a href="members.html">Crew</a>
+        <a href="events.html">Events</a>
+        <a href="wp.html" aria-current="page">WP</a>
+        <a href="join.html">Join</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero compact">
+        <p class="chip">WP READER</p>
+        <h1 id="wpReaderTitle">WP 阅读</h1>
+        <div class="wp-meta" id="wpReaderMeta"></div>
+        <a class="btn" href="wp.html">返回存档</a>
+      </section>
+
+      <article class="wp-reader" id="wpArticle" aria-live="polite">
+        <p>Loading...</p>
+      </article>
+    </main>
+  </body>
+</html>

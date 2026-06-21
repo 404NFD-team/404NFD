@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="404NFD CTF Team writeup archive. 404NFD 战队 WP 存档。" />
+    <meta name="theme-color" content="#151018" />
+    <title>404NFD | WP Archive</title>
+    <link rel="icon" href="../assets/favicon.ico" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <script src="../scripts/wp.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="../index.html" aria-label="404NFD home">
+        <img src="../assets/favicon.ico" alt="" />
+        <span>404NFD</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="about.html">About</a>
+        <a href="tracks.html">Tracks</a>
+        <a href="members.html">Crew</a>
+        <a href="events.html">Events</a>
+        <a href="wp.html" aria-current="page">WP</a>
+        <a href="join.html">Join</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="chip">WRITEUP ARCHIVE</p>
+        <h1>WP 存档</h1>
+        <p class="lead">
+          这里归档 404NFD 的比赛复盘、题解和脚本记录。Markdown 原文统一放在
+          <code>wp/</code> 文件夹里，索引卡片由 <code>wp.js</code> 维护。
+        </p>
+      </section>
+
+      <section class="wp-dashboard">
+        <article class="wp-summary" id="wpSummary" aria-live="polite"></article>
+        <aside class="wp-guide">
+          <span>ARCHIVE FLOW</span>
+          <strong>先看合集，再进题解</strong>
+          <ol>
+            <li>比赛合集用于收纳一次比赛的所有题解。</li>
+            <li>单篇题解用于直接进入作者或题目记录。</li>
+          </ol>
+        </aside>
+      </section>
+
+      <section class="wp-section">
+        <div class="section-title">
+          <p class="chip">COLLECTIONS</p>
+          <h2>比赛合集</h2>
+        </div>
+        <div class="wp-grid featured" id="wpCollections" aria-live="polite"></div>
+      </section>
+
+      <section class="wp-section">
+        <div class="section-title">
+          <p class="chip">WRITEUPS</p>
+          <h2>单篇题解</h2>
+        </div>
+        <div class="wp-grid" id="wpArticles" aria-live="polite"></div>
+      </section>
+    </main>
+  </body>
+</html>
