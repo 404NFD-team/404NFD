@@ -19,8 +19,6 @@ const events = [
   },
 ];
 
-const calendarFallbackMonth = "2026-06";
-
 const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
   month: "long",
   day: "numeric",
@@ -29,6 +27,12 @@ const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
 
 const unknownDateTexts = new Set(["", "待定", "敬请期待", "未定", "日期待定", "tbd", "unknown"]);
 const unknownTimeTexts = new Set(["", "待定", "敬请期待", "未定", "时间待定", "tbd", "unknown"]);
+const calendarState = {
+  upcoming: [],
+  selectedDateKey: "",
+  viewMonth: null,
+  viewYear: null,
+};
 
 function escapeHTML(value = "") {
   return String(value).replace(/[&<>"']/g, (char) => {
@@ -125,22 +129,66 @@ function formatCountdown(event) {
   return dayCount === 0 ? "今天" : `${dayCount} 天后`;
 }
 
-function renderNextEvent(upcoming) {
+function padNumber(value) {
+  return String(value).padStart(2, "0");
+}
+
+function getCalendarDateKey(year, month, day) {
+  return `${year}-${padNumber(month + 1)}-${padNumber(day)}`;
+}
+
+function parseDateKey(dateKey) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateKey);
+  if (!match) return null;
+
+  return {
+    year: Number(match[1]),
+    month: Number(match[2]) - 1,
+    day: Number(match[3]),
+  };
+}
+
+function formatDateKeyLabel(dateKey) {
+  const parts = parseDateKey(dateKey);
+  if (!parts) return dateKey;
+
+  return dateFormatter.format(new Date(parts.year, parts.month, parts.day));
+}
+
+function getEventDateKey(event) {
+  if (!event.startsAt) return "";
+
+  const date = normalizeText(event.date);
+  return /^\d{4}-\d{2}-\d{2}$/.test(date)
+    ? date
+    : getCalendarDateKey(event.startsAt.getFullYear(), event.startsAt.getMonth(), event.startsAt.getDate());
+}
+
+function getEventsForDate(upcoming, dateKey) {
+  if (!dateKey) return upcoming;
+
+  return upcoming.filter((event) => getEventDateKey(event) === dateKey);
+}
+
+function renderNextEvent(upcoming, selectedDateKey = "") {
   const container = document.querySelector("#nextEvent");
   if (!container) return;
 
-  const event = upcoming[0];
+  const selectedEvents = getEventsForDate(upcoming, selectedDateKey);
+  const event = selectedEvents[0];
+  const label = selectedDateKey ? "SELECTED DATE" : "NEXT EVENT";
+
   if (!event) {
     container.innerHTML = `
-      <span class="event-label">NEXT EVENT</span>
-      <h2>暂无即将发生的活动</h2>
-      <p>新的训练、比赛或分享确定后，会同步更新到这里。</p>
+      <span class="event-label">${label}</span>
+      <h2>${selectedDateKey ? `${escapeHTML(formatDateKeyLabel(selectedDateKey))}暂无活动` : "暂无即将发生的活动"}</h2>
+      <p>${selectedDateKey ? "这天暂时没有安排活动。" : "新的训练、比赛或分享确定后，会同步更新到这里。"}</p>
     `;
     return;
   }
 
   container.innerHTML = `
-    <span class="event-label">NEXT EVENT</span>
+    <span class="event-label">${label}</span>
     <h2>${escapeHTML(event.title)}</h2>
     <div class="event-countdown">${escapeHTML(formatCountdown(event))}</div>
     <p>${escapeHTML(event.description)}</p>
@@ -153,16 +201,20 @@ function renderNextEvent(upcoming) {
   `;
 }
 
-function renderEventList(upcoming) {
+function renderEventList(upcoming, selectedDateKey = "") {
   const container = document.querySelector("#eventList");
   if (!container) return;
 
-  if (!upcoming.length) {
-    container.innerHTML = '<p class="member-empty">暂无即将发生的活动，欢迎关注 404NFD 后续通知。</p>';
+  const visibleEvents = getEventsForDate(upcoming, selectedDateKey);
+
+  if (!visibleEvents.length) {
+    container.innerHTML = selectedDateKey
+      ? `<p class="member-empty">${escapeHTML(formatDateKeyLabel(selectedDateKey))} 暂无活动。</p>`
+      : '<p class="member-empty">暂无即将发生的活动，欢迎关注 404NFD 后续通知。</p>';
     return;
   }
 
-  container.innerHTML = upcoming
+  container.innerHTML = visibleEvents
     .map((event) => {
       const badge = getEventDateBadge(event);
 
@@ -191,23 +243,66 @@ function renderEventList(upcoming) {
     .join("");
 }
 
+function getInitialCalendarDate(upcoming) {
+  if (upcoming[0]?.startsAt) return upcoming[0].startsAt;
+
+  const formatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+  });
+  const parts = Object.fromEntries(formatter.formatToParts(new Date()).map((part) => [part.type, part.value]));
+
+  return new Date(Number(parts.year), Number(parts.month) - 1, 1);
+}
+
+function setCalendarView(date) {
+  calendarState.viewYear = date.getFullYear();
+  calendarState.viewMonth = date.getMonth();
+}
+
+function updateCalendarSelection() {
+  const selection = document.querySelector("#calendarSelection");
+  const clearButton = document.querySelector("#clearDateButton");
+
+  if (selection) {
+    selection.textContent = calendarState.selectedDateKey
+      ? `已选 ${formatDateKeyLabel(calendarState.selectedDateKey)}`
+      : "全部日期";
+  }
+
+  if (clearButton) {
+    clearButton.disabled = !calendarState.selectedDateKey;
+  }
+}
+
 function renderCalendar(upcoming) {
   const monthLabel = document.querySelector("#calendarMonth");
   const grid = document.querySelector("#calendarGrid");
   if (!monthLabel || !grid) return;
 
-  const fallbackDate = new Date(`${calendarFallbackMonth}-01T00:00:00+08:00`);
-  const base = upcoming[0]?.startsAt || (Number.isNaN(fallbackDate.getTime()) ? new Date() : fallbackDate);
-  const year = base.getFullYear();
-  const month = base.getMonth();
+  if (calendarState.viewYear === null || calendarState.viewMonth === null) {
+    setCalendarView(getInitialCalendarDate(upcoming));
+  }
+
+  const year = calendarState.viewYear;
+  const month = calendarState.viewMonth;
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
-  const eventDays = new Set(
-    upcoming
-      .filter((event) => event.startsAt)
-      .filter((event) => event.startsAt.getFullYear() === year && event.startsAt.getMonth() === month)
-      .map((event) => event.startsAt.getDate()),
-  );
+  const monthPrefix = `${year}-${padNumber(month + 1)}-`;
+  const today = new Date();
+  const todayKey = getCalendarDateKey(today.getFullYear(), today.getMonth(), today.getDate());
+  const eventCounts = new Map();
+
+  upcoming.forEach((event) => {
+    const dateKey = getEventDateKey(event);
+    if (!dateKey.startsWith(monthPrefix)) return;
+
+    const parts = parseDateKey(dateKey);
+    if (!parts) return;
+
+    eventCounts.set(parts.day, (eventCounts.get(parts.day) || 0) + 1);
+  });
 
   monthLabel.textContent = `${year}.${String(month + 1).padStart(2, "0")}`;
 
@@ -215,12 +310,27 @@ function renderCalendar(upcoming) {
   const weekdayOffset = firstDay.getDay();
 
   for (let i = 0; i < weekdayOffset; i += 1) {
-    cells.push('<span class="calendar-cell muted"></span>');
+    cells.push('<span class="calendar-cell muted" aria-hidden="true"></span>');
   }
 
   for (let day = 1; day <= lastDay.getDate(); day += 1) {
-    const active = eventDays.has(day) ? " active" : "";
-    cells.push(`<span class="calendar-cell${active}">${day}</span>`);
+    const dateKey = getCalendarDateKey(year, month, day);
+    const eventCount = eventCounts.get(day) || 0;
+    const classes = ["calendar-cell"];
+
+    if (eventCount) classes.push("active");
+    if (calendarState.selectedDateKey === dateKey) classes.push("selected");
+    if (todayKey === dateKey) classes.push("today");
+
+    cells.push(`
+      <button
+        class="${classes.join(" ")}"
+        type="button"
+        data-date="${dateKey}"
+        aria-pressed="${calendarState.selectedDateKey === dateKey ? "true" : "false"}"
+        aria-label="${escapeHTML(`${year}年${month + 1}月${day}日${eventCount ? `，${eventCount} 个活动` : ""}`)}"
+      >${day}</button>
+    `);
   }
 
   grid.innerHTML = ["日", "一", "二", "三", "四", "五", "六"]
@@ -228,11 +338,69 @@ function renderCalendar(upcoming) {
     .join("") + cells.join("");
 }
 
+function renderEventsView() {
+  renderNextEvent(calendarState.upcoming, calendarState.selectedDateKey);
+  renderEventList(calendarState.upcoming, calendarState.selectedDateKey);
+  renderCalendar(calendarState.upcoming);
+  updateCalendarSelection();
+}
+
+function shiftCalendarMonth(offset) {
+  setCalendarView(new Date(calendarState.viewYear, calendarState.viewMonth + offset, 1));
+  renderEventsView();
+}
+
+function selectCalendarDate(dateKey) {
+  const parts = parseDateKey(dateKey);
+  if (!parts) return;
+
+  calendarState.selectedDateKey = calendarState.selectedDateKey === dateKey ? "" : dateKey;
+  calendarState.viewYear = parts.year;
+  calendarState.viewMonth = parts.month;
+  renderEventsView();
+}
+
+function selectToday() {
+  const today = new Date();
+
+  calendarState.viewYear = today.getFullYear();
+  calendarState.viewMonth = today.getMonth();
+  calendarState.selectedDateKey = getCalendarDateKey(today.getFullYear(), today.getMonth(), today.getDate());
+  renderEventsView();
+}
+
+function bindCalendarControls() {
+  const grid = document.querySelector("#calendarGrid");
+  const prevMonth = document.querySelector("#prevMonth");
+  const nextMonth = document.querySelector("#nextMonth");
+  const todayButton = document.querySelector("#todayButton");
+  const clearDateButton = document.querySelector("#clearDateButton");
+
+  grid?.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    const cell = event.target.closest(".calendar-cell[data-date]");
+    if (!cell) return;
+
+    selectCalendarDate(cell.dataset.date || "");
+  });
+
+  prevMonth?.addEventListener("click", () => shiftCalendarMonth(-1));
+  nextMonth?.addEventListener("click", () => shiftCalendarMonth(1));
+  todayButton?.addEventListener("click", selectToday);
+  clearDateButton?.addEventListener("click", () => {
+    calendarState.selectedDateKey = "";
+    renderEventsView();
+  });
+}
+
 function bootEvents() {
   const upcoming = getUpcomingEvents();
-  renderNextEvent(upcoming);
-  renderEventList(upcoming);
-  renderCalendar(upcoming);
+
+  calendarState.upcoming = upcoming;
+  setCalendarView(getInitialCalendarDate(upcoming));
+  bindCalendarControls();
+  renderEventsView();
 }
 
 bootEvents();

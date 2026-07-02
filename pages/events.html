@@ -30,19 +30,22 @@
       <section class="page-hero">
         <p class="chip">EVENT CALENDAR</p>
         <h1>活动日历</h1>
-        <p class="lead">
-          展示 404NFD 即将发生的训练、比赛、分享和招新活动。新增活动时只需要维护
-          <code>events.js</code> 顶部的数据。
-        </p>
       </section>
 
       <section class="event-dashboard">
         <article class="next-event" id="nextEvent" aria-live="polite"></article>
         <aside class="calendar-card">
           <div class="calendar-head">
+            <button class="calendar-nav" id="prevMonth" type="button" aria-label="上一个月">&lt;</button>
             <span id="calendarMonth">----</span>
-            <strong>Upcoming</strong>
+            <button class="calendar-nav" id="nextMonth" type="button" aria-label="下一个月">&gt;</button>
           </div>
+          <div class="calendar-tools">
+            <strong>Upcoming</strong>
+            <button class="calendar-tool" id="todayButton" type="button">今天</button>
+            <button class="calendar-tool" id="clearDateButton" type="button">全部</button>
+          </div>
+          <p class="calendar-selection" id="calendarSelection" aria-live="polite">全部日期</p>
           <div class="calendar-grid" id="calendarGrid" aria-label="本月活动日历"></div>
         </aside>
       </section>
