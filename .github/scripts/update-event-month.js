@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const eventsPath = path.resolve(process.cwd(), "new web/scripts/events.js");
+const eventsPath = path.resolve(process.cwd(), "scripts/events.js");
 const formatter = new Intl.DateTimeFormat("en-CA", {
   timeZone: "Asia/Shanghai",
   year: "numeric",
